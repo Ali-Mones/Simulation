@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Machine } from '../Classes/machine';
 import { Part } from '../Classes/part';
 import { Queue } from '../Classes/queue';
+import { CanvasInput } from './CanvasInput';
 
 @Component({
   selector: 'app-canvas',
@@ -12,6 +13,7 @@ export class CanvasComponent implements OnInit {
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
   ctx!: CanvasRenderingContext2D;
+  input: CanvasInput = new CanvasInput(this);
   parts: Part[] = [];
 
   ngOnInit(): void {
@@ -34,8 +36,8 @@ export class CanvasComponent implements OnInit {
   }
 
   initMouseInput() {
-    this.canvas.nativeElement.addEventListener('mousedown', (e) => {
-      this.render();
-    });
+    this.canvas.nativeElement.addEventListener('mousedown', (e) => { this.input.mouseDown(); });
+    this.canvas.nativeElement.addEventListener('mouseup', (e) => { this.input.mouseUp(); });
+    this.canvas.nativeElement.addEventListener('mousemove', (e) => { this.input.mouseMove(); });
   }
 }
