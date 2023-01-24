@@ -32,7 +32,7 @@ export class Queue extends Part {
         throw new Error("Method not implemented.");
     }
     override isMouseInside(mouseX: number, mouseY: number): boolean {
-        throw new Error("Method not implemented.");
+        return mouseX >= this.x - this.width / 2 && mouseX <= this.x + this.width / 2 && mouseY >= this.y - this.height / 2 && mouseY <= this.y + this.height / 2;
     }
     override changeColour(color: string): void {
         throw new Error("Method not implemented.");

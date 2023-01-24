@@ -1,3 +1,5 @@
+import { parseTemplate } from "@angular/compiler";
+
 export abstract class Part {
 
     x!: number;
@@ -6,15 +8,22 @@ export abstract class Part {
     colour!: string;
     next: Part[] = [];
 
-    draw(ctx: CanvasRenderingContext2D, x: number, y: number): void {}
-    update(ctx: CanvasRenderingContext2D): void {}
-    move(x: number, y: number): void {}
-    isMouseInside(mouseX: number, mouseY: number): boolean { return true }
-    changeColour(color: string): void {}
-    flash(): void {}
-    
-    setNext(parts: Part[]): void {
-        this.next = parts;
+    abstract draw(ctx: CanvasRenderingContext2D, x: number, y: number): void;
+    abstract update(ctx: CanvasRenderingContext2D): void;
+    abstract move(x: number, y: number): void;
+    abstract isMouseInside(mouseX: number, mouseY: number): boolean;
+    abstract changeColour(color: string): void;
+    abstract flash(): void;
+
+    public addNext(part: Part): void {
+        if (!this.next.includes(part))
+            this.next.push(part);
+    }
+
+    public unLink(second: Part): void {
+        this.next.splice(this.next.findIndex((part) => {
+            part == second;
+        }), 1);
     }
 
     protected renderArrow(ctx: CanvasRenderingContext2D) {
@@ -23,12 +32,12 @@ export abstract class Part {
         });
     }
 
-    protected drawArrow(ctx: CanvasRenderingContext2D, tox: number, toy: number) {
+    private drawArrow(ctx: CanvasRenderingContext2D, tox: number, toy: number) {
         //variables to be used when creating the arrow
         var headlen = 10;
         var angle = Math.atan2(toy - this.y, tox - this.x);
 
-        let startX: number = this.x + 50 * Math.cos(angle)
+        let startX: number = this.x + 50 * Math.cos(angle);
         let startY: number = this.y + 50 * Math.sin(angle);
 
         tox = tox - 55 * Math.cos(angle);

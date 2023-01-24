@@ -1,8 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Machine } from '../Classes/machine';
 import { Part } from '../Classes/part';
 import { Queue } from '../Classes/queue';
-import { CanvasInput } from './CanvasInput';
+import { LinkState } from '../States/LinkState';
+import { NormalState } from '../States/NormalState';
+import { State } from '../States/state';
+import { UnlinkState } from '../States/UnlinkState';
 
 @Component({
   selector: 'app-canvas',
@@ -13,31 +16,47 @@ export class CanvasComponent implements OnInit {
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
   ctx!: CanvasRenderingContext2D;
-  input: CanvasInput = new CanvasInput(this);
   parts: Part[] = [];
+  qID: number = 0;
+  mID: number = 0;
+  state: State = new NormalState(this);
 
   ngOnInit(): void {
     this.ctx = <CanvasRenderingContext2D>this.canvas.nativeElement.getContext('2d');
     this.initMouseInput();
-    let m0: Machine = new Machine(250, 100, 0);
-    let m1: Machine = new Machine(200, 200, 1);
-    let q0: Queue = new Queue(100, 100, 0);
-    let q1: Queue = new Queue(400, 150, 1);
-    q0.setNext([m0, m1]);
-    m0.setNext([q1]);
-    m1.setNext([q1]);
-    this.parts.push(m0, m1, q0, q1);
   }
 
-  render() {
+  private render() {
+    this.ctx.fillStyle = '#FFF';
+    this.ctx.fillRect(0, 0, 1536, 661);
     this.parts.forEach((part) => {
       part.update(this.ctx);
     });
   }
 
-  initMouseInput() {
-    this.canvas.nativeElement.addEventListener('mousedown', (e) => { this.input.mouseDown(); });
-    this.canvas.nativeElement.addEventListener('mouseup', (e) => { this.input.mouseUp(); });
-    this.canvas.nativeElement.addEventListener('mousemove', (e) => { this.input.mouseMove(); });
+  private initMouseInput() {
+    this.canvas.nativeElement.addEventListener('mousedown', (e) => { this.render(); this.state.mouseDown(e); });
+    this.canvas.nativeElement.addEventListener('mouseup', (e) => { this.render(); this.state.mouseUp(e); });
+    this.canvas.nativeElement.addEventListener('mousemove', (e) => { this.render(); this.state.mouseMove(e); });
+  }
+
+  addQ() {
+    let q: Queue = new Queue(500, 500, this.qID++);
+    this.parts.push(q);
+    this.render();
+  }
+
+  addM() {
+    let m: Machine = new Machine(500, 500, this.mID++);
+    this.parts.push(m);
+    this.render();
+  }
+
+  addLink() {
+    this.state = new LinkState(this);
+  }
+
+  unlink() {
+    this.state = new UnlinkState(this);
   }
 }

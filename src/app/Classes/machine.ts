@@ -30,7 +30,7 @@ export class Machine extends Part {
     }
 
     override move(x: number, y: number): void {
-
+        
     }
 
     override changeColour(color: string): void {
