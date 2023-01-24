@@ -1,5 +1,3 @@
-import { parseTemplate } from "@angular/compiler";
-
 export abstract class Part {
 
     x!: number;
@@ -20,10 +18,10 @@ export abstract class Part {
             this.next.push(part);
     }
 
-    public unLink(second: Part): void {
-        this.next.splice(this.next.findIndex((part) => {
-            part == second;
-        }), 1);
+    public unlink(second: Part): void {
+        if (this.next.includes(second)) {
+            this.next.splice(this.next.indexOf(second), 1);
+        }
     }
 
     protected renderArrow(ctx: CanvasRenderingContext2D) {
