@@ -1,5 +1,5 @@
-import { MoveState } from "./moveState";
-import { State } from "./state";
+import { MoveState } from "./MoveState";
+import { State } from "./State";
 
 export class NormalState extends State {
 
