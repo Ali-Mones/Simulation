@@ -15,8 +15,10 @@ export class UnlinkState extends State {
                 }
                 else {
                     this.second = part;
-                    this.first.unLink(this.second);
-                    this.second.unLink(this.first);
+                    console.log(this.first, this.second);
+                    this.first.unlink(this.second);
+                    this.second.unlink(this.first);
+                    console.log(this.first.next, this.second.next);
                     this.canvas.state = new NormalState(this.canvas);
                 }
             }
