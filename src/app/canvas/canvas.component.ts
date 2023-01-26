@@ -4,7 +4,7 @@ import { Part } from '../Classes/part';
 import { Queue } from '../Classes/queue';
 import { LinkState } from '../States/LinkState';
 import { NormalState } from '../States/NormalState';
-import { State } from '../States/state';
+import { State } from '../States/State';
 import { UnlinkState } from '../States/UnlinkState';
 
 @Component({
