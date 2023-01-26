@@ -1,5 +1,6 @@
-import { CanvasComponent } from "../canvas/canvas.component";
-import { Part } from "../Classes/part";
+import { Machine } from "../Classes/Machine";
+import { Part } from "../Classes/Part";
+import { Queue } from "../Classes/Queue";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -16,9 +17,14 @@ export class LinkState extends State {
                 }
                 else {
                     this.to = part;
-                    this.from.addNext(this.to);
+                    if (this.from instanceof Machine)
+                        this.from.next[0] = this.to
+                    else (this.from instanceof Queue)
+                        this.from.addNext(this.to);
+                    this.to.addPrev(this.from);
+                    this.canvas.update();
                     this.canvas.state = new NormalState(this.canvas);
-                }
+}
             }
         });
     }

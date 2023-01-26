@@ -11,4 +11,8 @@
     <button (click)="unlinkEvent.emit()">
         unlink
     </button>
+    <button (click)="startSimulationEvent.emit()">
+        start simulation
+    </button>
+    <input [placeholder]="'Input Count'" (change)="setInput($event)" type="number">
 </div>

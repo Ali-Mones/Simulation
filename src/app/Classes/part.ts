@@ -5,17 +5,21 @@ export abstract class Part {
     id!: number;
     colour!: string;
     next: Part[] = [];
+    prev: Part[] = [];
 
     abstract draw(ctx: CanvasRenderingContext2D, x: number, y: number): void;
     abstract update(ctx: CanvasRenderingContext2D): void;
     abstract move(x: number, y: number): void;
     abstract isMouseInside(mouseX: number, mouseY: number): boolean;
-    abstract changeColour(color: string): void;
-    abstract flash(): void;
 
     public addNext(part: Part): void {
         if (!this.next.includes(part))
             this.next.push(part);
+    }
+
+    public addPrev(part: Part): void {
+        if (!this.prev.includes(part))
+            this.prev.push(part);
     }
 
     public unlink(second: Part): void {

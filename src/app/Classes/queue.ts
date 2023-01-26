@@ -1,9 +1,10 @@
-import { Part } from "./part";
+import { Part } from "./Part";
 
 export class Queue extends Part {
 
     private width = 80;
     private height = 50;
+    isEndQueue: boolean = false;
 
     constructor(x: number, y: number, id: number) {
         super();
@@ -33,11 +34,5 @@ export class Queue extends Part {
     }
     override isMouseInside(mouseX: number, mouseY: number): boolean {
         return mouseX >= this.x - this.width / 2 && mouseX <= this.x + this.width / 2 && mouseY >= this.y - this.height / 2 && mouseY <= this.y + this.height / 2;
-    }
-    override changeColour(color: string): void {
-        throw new Error("Method not implemented.");
-    }
-    override flash(): void {
-        throw new Error("Method not implemented.");
     }
 }
