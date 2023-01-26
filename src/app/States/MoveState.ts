@@ -1,5 +1,5 @@
 import { CanvasComponent } from "../canvas/canvas.component";
-import { Part } from "../Classes/part";
+import { Part } from "../Classes/Part";
 import { NormalState } from "./NormalState";
 import { State } from "./state";
 
@@ -27,6 +27,7 @@ export class MoveState extends State {
 
         this.oldMouseX = e.x;
         this.oldMouseY = e.y - 28;
+        this.canvas.update();
     }
 
     mouseDown(e: MouseEvent): void {

@@ -1,4 +1,4 @@
-import { Part } from "../Classes/part";
+import { Part } from "../Classes/Part";
 import { NormalState } from "./NormalState";
 import { State } from "./state";
 
@@ -18,7 +18,7 @@ export class UnlinkState extends State {
                     console.log(this.first, this.second);
                     this.first.unlink(this.second);
                     this.second.unlink(this.first);
-                    console.log(this.first.next, this.second.next);
+                    this.canvas.update();
                     this.canvas.state = new NormalState(this.canvas);
                 }
             }

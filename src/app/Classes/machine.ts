@@ -1,4 +1,4 @@
-import { Part } from "./part";
+import { Part } from "./Part";
 
 export class Machine extends Part {
     private radius: number = 40;
@@ -27,18 +27,18 @@ export class Machine extends Part {
         ctx.fillStyle = 'rgba(0, 0, 0, 255)';
         ctx.font = '30px Arial'
         ctx.fillText('M' + this.id, this.x - this.radius / 2, this.y + this.radius * 0.25);
+        this.flash();
     }
 
     override move(x: number, y: number): void {
         
     }
 
-    override changeColour(color: string): void {
+    changeColour(color: string): void {
         throw new Error("Method not implemented.");
     }
 
-    override flash(): void {
-        throw new Error("Method not implemented.");
+    flash() {
     }
 
     override isMouseInside(mouseX: number, mouseY: number): boolean {

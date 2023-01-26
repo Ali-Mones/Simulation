@@ -2,5 +2,7 @@
 (addQEvent)="canvas.addQ()" 
 (addMEvent)="canvas.addM()" 
 (addLinkEvent)="canvas.addLink()" 
-(unlinkEvent)="canvas.unlink()" #menu></app-top-menu>
+(unlinkEvent)="canvas.unlink()"
+(startSimulationEvent)="canvas.startSimulation()"
+(inputChange)="canvas.input = $event" #menu></app-top-menu>
 <app-canvas #canvas></app-canvas>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-top-menu',
@@ -15,4 +15,13 @@ export class TopMenuComponent {
   addLinkEvent: EventEmitter<void> = new EventEmitter();
   @Output()
   unlinkEvent: EventEmitter<void> = new EventEmitter();
+  @Output()
+  startSimulationEvent: EventEmitter<void> = new EventEmitter();
+  @Output()
+  inputChange: EventEmitter<number> = new EventEmitter();
+  
+
+  setInput(event: Event) {
+    this.inputChange.emit(parseInt((<HTMLInputElement>event.target).value));
+  }
 }
