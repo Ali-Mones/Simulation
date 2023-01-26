@@ -14,5 +14,14 @@
     <button (click)="startSimulationEvent.emit()">
         start simulation
     </button>
+    <button (click)="resetSimulationEvent.emit()">
+        reset
+    </button>
+    <button (click)="replayEvent.emit()">
+        replay
+    </button>
     <input [placeholder]="'Input Count'" (change)="setInput($event)" type="number">
+    <div *ngIf="remainingProducts" id="remining-products">
+        Remaining Products: {{ remainingProducts }}
+    </div>
 </div>

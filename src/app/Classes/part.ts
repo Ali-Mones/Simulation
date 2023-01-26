@@ -7,9 +7,7 @@ export abstract class Part {
     next: Part[] = [];
     prev: Part[] = [];
 
-    abstract draw(ctx: CanvasRenderingContext2D, x: number, y: number): void;
     abstract update(ctx: CanvasRenderingContext2D): void;
-    abstract move(x: number, y: number): void;
     abstract isMouseInside(mouseX: number, mouseY: number): boolean;
 
     public addNext(part: Part): void {

@@ -1,6 +1,6 @@
-import { Machine } from "../Classes/Machine";
-import { Part } from "../Classes/Part";
-import { Queue } from "../Classes/Queue";
+import { Machine } from "../Classes/machine";
+import { Part } from "../Classes/part";
+import { Queue } from "../Classes/queue";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -11,7 +11,7 @@ export class LinkState extends State {
 
     mouseUp(e: MouseEvent): void {
         this.canvas.parts.forEach((part) => {
-            if (part.isMouseInside(e.x, e.y - 28)) {
+            if (part.isMouseInside(e.x, e.y - 52)) {
                 if (!this.from) {
                     this.from = part;
                 }

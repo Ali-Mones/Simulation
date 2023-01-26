@@ -7,8 +7,8 @@ export class NormalState extends State {
     }
     mouseDown(e: MouseEvent): void {
         this.canvas.parts.forEach((part) => {
-            if (part.isMouseInside(e.x, e.y - 28)) {
-                this.canvas.state = new MoveState(this.canvas, part, e.x, e.y - 28);
+            if (part.isMouseInside(e.x, e.y - 52)) {
+                this.canvas.state = new MoveState(this.canvas, part, e.x, e.y - 52);
             }
         });
     }

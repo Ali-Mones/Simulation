@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CircuitInfo } from '../Classes/Adapter';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class BackendCommunicatorService {
   }
 
   public getCurrentImage() {
-    return this.http.get('http://localhost:8085/getCurrentImage');
+    return this.http.get<CircuitInfo>('http://localhost:8085/getCurrentImage');
   }
 
   public isSimulationFinished() {
@@ -35,7 +36,7 @@ export class BackendCommunicatorService {
   }
 
   public getPrevImage(second: number) {
-    return this.http.get('http://localhost:8085/startSimulation', { params: new HttpParams()
+    return this.http.get<CircuitInfo>('http://localhost:8085/replay', { params: new HttpParams()
     .set('second', second)
     });
   }

@@ -1,9 +1,10 @@
-import { Part } from "./Part";
+import { Part } from "./part";
 
 export class Queue extends Part {
 
     private width = 80;
     private height = 50;
+    remaining: number = 0;
     isEndQueue: boolean = false;
 
     constructor(x: number, y: number, id: number) {
@@ -13,9 +14,6 @@ export class Queue extends Part {
         this.id = id;
     }
 
-    override draw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-        
-    }
     override update(ctx: CanvasRenderingContext2D): void {
         this.colour = 'rgba(255, 255, 148, 255)'
         this.renderArrow(ctx);
@@ -26,11 +24,10 @@ export class Queue extends Part {
         ctx.beginPath();
         ctx.strokeRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
         ctx.fillStyle = 'rgba(0, 0, 0, 255)';
-        ctx.font = '30px Arial'
-        ctx.fillText('Q' + this.id, this.x - this.width / 4, this.y + this.height * 0.2);
-    }
-    override move(x: number, y: number): void {
-        throw new Error("Method not implemented.");
+        ctx.font = '24px Arial'
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle"
+        ctx.fillText('Q' + this.id + ': ' + this.remaining, this.x, this.y);
     }
     override isMouseInside(mouseX: number, mouseY: number): boolean {
         return mouseX >= this.x - this.width / 2 && mouseX <= this.x + this.width / 2 && mouseY >= this.y - this.height / 2 && mouseY <= this.y + this.height / 2;

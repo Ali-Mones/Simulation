@@ -1,5 +1,5 @@
 import { CanvasComponent } from "../canvas/canvas.component";
-import { Part } from "../Classes/Part";
+import { Part } from "../Classes/part";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -18,7 +18,7 @@ export class MoveState extends State {
 
     override mouseMove(e: MouseEvent): void {
         let diffX = e.x - this.oldMouseX;
-        let diffY = e.y - 28 - this.oldMouseY;
+        let diffY = e.y - 52 - this.oldMouseY;
 
         if (this.part) {
             this.part.x += diffX;
@@ -26,7 +26,7 @@ export class MoveState extends State {
         }
 
         this.oldMouseX = e.x;
-        this.oldMouseY = e.y - 28;
+        this.oldMouseY = e.y - 52;
         this.canvas.update();
     }
 

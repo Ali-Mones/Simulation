@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LinkState } from './States/LinkState';
 
 @Component({
   selector: 'app-root',

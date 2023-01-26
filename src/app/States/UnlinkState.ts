@@ -1,4 +1,4 @@
-import { Part } from "../Classes/Part";
+import { Part } from "../Classes/part";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -9,7 +9,7 @@ export class UnlinkState extends State {
 
     mouseUp(e: MouseEvent): void {
         this.canvas.parts.forEach((part) => {
-            if (part.isMouseInside(e.x, e.y - 28)) {
+            if (part.isMouseInside(e.x, e.y - 52)) {
                 if (!this.first) {
                     this.first = part;
                 }

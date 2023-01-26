@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { interval, lastValueFrom, take, takeWhile, tap } from 'rxjs';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { take, tap } from 'rxjs';
 import { BackendCommunicatorService } from '../Services/backend-communicator.service';
 import { Adapter, MachineInfo, QueueInfo } from '../Classes/Adapter';
-import { Machine } from '../Classes/Machine';
-import { Part } from '../Classes/Part';
-import { Queue } from '../Classes/Queue';
+import { Machine } from '../Classes/machine';
+import { Part } from '../Classes/part';
+import { Queue } from '../Classes/queue';
 import { LinkState } from '../States/LinkState';
 import { NormalState } from '../States/NormalState';
 import { State } from '../States/State';
@@ -24,6 +24,13 @@ export class CanvasComponent implements OnInit {
   mID: number = 0;
   state: State = new NormalState(this);
   input: number = 0;
+  running: boolean = false;
+  timer!: NodeJS.Timer;
+  replayTime: number = 1;
+  timeTaken: number = 1;
+  @Output()
+  remaining: EventEmitter<number> = new EventEmitter();
+
   
   constructor(
     private backend: BackendCommunicatorService
@@ -32,18 +39,30 @@ export class CanvasComponent implements OnInit {
   ngOnInit() {
     this.ctx = <CanvasRenderingContext2D>this.canvas.nativeElement.getContext('2d');
     this.initMouseInput();
-    setInterval(this.update.bind(this), 1000);
   }
 
   update() {
+    if (this.running) {
+      this.backend.getCurrentImage().pipe(take(1), tap((circuit) => {
+        Adapter.adapt(this.parts, circuit);
+        this.timeTaken++;
+        this.remaining.emit(circuit.productsNum);
+      })).subscribe();
+
+      this.backend.isSimulationFinished().pipe(take(1), tap((finished) => {
+        if (finished) {
+          this.running = false;
+          clearInterval(this.timer);
+          console.log(finished);
+          setTimeout(this.update.bind(this), 1000);
+        }
+      })).subscribe();
+    }
+
     this.ctx.clearRect(0, 0, 1536, 661);
     this.parts.forEach((part) => {
       part.update(this.ctx);
     });
-    this.backend.isSimulationFinished().pipe(take(1), tap((value) => {
-      if (value)
-        console.log(value);
-    })).subscribe();
   }
   
   startSimulation() {
@@ -55,9 +74,43 @@ export class CanvasComponent implements OnInit {
       else if (part instanceof Queue)
         queues.push(Adapter.toQueueInfo(part));
     });
+    
     if (this.input > 0) {
+      this.running = true;
       this.backend.startSimulation(JSON.stringify(machines), JSON.stringify(queues), this.input).pipe(take(1)).subscribe();
+      this.timer = setInterval(this.update.bind(this), 1000);
     }
+  }
+
+  reset() {
+    this.backend.resetSimulator().pipe(take(1)).subscribe();
+    this.parts = [];
+    this.qID = 0;
+    this.mID = 0;
+    this.state = new NormalState(this);
+    this.input = 0;
+    this.running = false;
+    clearInterval(this.timer);
+    this.replayTime = 1;
+    this.timeTaken = 1;
+    this.update();
+  }
+
+  initReplay() {
+    this.timer = setInterval(this.replay.bind(this), 1000);
+  }
+
+  private replay() {
+    if (this.replayTime >= this.timeTaken) {
+      clearInterval(this.timer);
+      this.replayTime = 0;
+      return;
+    }
+    this.backend.getPrevImage(this.replayTime).pipe(take(1), tap((circuit) => {
+      Adapter.adapt(this.parts, circuit);
+      this.update();
+      this.replayTime++;
+    })).subscribe();
   }
   
   private initMouseInput() {
@@ -68,13 +121,13 @@ export class CanvasComponent implements OnInit {
 
   
   addQ() {
-    let q: Queue = new Queue(500, 500, this.qID++);
+    let q: Queue = new Queue(520, 520, this.qID++);
     this.parts.push(q);
     this.update();
   }
 
   addM() {
-    let m: Machine = new Machine(500, 500, this.mID++);
+    let m: Machine = new Machine(520, 520, this.mID++);
     this.parts.push(m);
     this.update();
   }

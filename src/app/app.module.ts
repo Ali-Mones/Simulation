@@ -9,7 +9,7 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
 @NgModule({
   declarations: [
     AppComponent, 
-    CanvasComponent, 
+    CanvasComponent,
     TopMenuComponent
   ],
   imports: [

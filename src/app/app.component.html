@@ -4,5 +4,8 @@
 (addLinkEvent)="canvas.addLink()" 
 (unlinkEvent)="canvas.unlink()"
 (startSimulationEvent)="canvas.startSimulation()"
-(inputChange)="canvas.input = $event" #menu></app-top-menu>
-<app-canvas #canvas></app-canvas>
+(resetSimulationEvent)="canvas.reset()"
+(inputChange)="canvas.input = $event"
+(replayEvent)="canvas.initReplay()" #menu></app-top-menu>
+<app-canvas
+(remaining)="menu.remainingProducts = $event" #canvas></app-canvas>

@@ -1,4 +1,4 @@
-import { Part } from "./Part";
+import { Part } from "./part";
 
 export class Machine extends Part {
     private radius: number = 40;
@@ -8,14 +8,10 @@ export class Machine extends Part {
         this.x = x;
         this.y = y;
         this.id = id;
-    }
-
-    override draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
-        ctx.beginPath();
+        this.colour = 'rgba(187, 143, 206, 255)';
     }
 
     override update(ctx: CanvasRenderingContext2D) {
-        this.colour = 'rgba(0, 255, 145, 255)'
         this.renderArrow(ctx);
         ctx.strokeStyle = 'rgba(0, 0, 0, 255)'; //black
         ctx.lineWidth = 10;
@@ -26,19 +22,9 @@ export class Machine extends Part {
         ctx.fill();
         ctx.fillStyle = 'rgba(0, 0, 0, 255)';
         ctx.font = '30px Arial'
-        ctx.fillText('M' + this.id, this.x - this.radius / 2, this.y + this.radius * 0.25);
-        this.flash();
-    }
-
-    override move(x: number, y: number): void {
-        
-    }
-
-    changeColour(color: string): void {
-        throw new Error("Method not implemented.");
-    }
-
-    flash() {
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle"
+        ctx.fillText('M' + this.id, this.x, this.y);
     }
 
     override isMouseInside(mouseX: number, mouseY: number): boolean {
