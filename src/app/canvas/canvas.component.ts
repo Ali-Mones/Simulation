@@ -7,8 +7,8 @@ import { Part } from '../Classes/Part';
 import { Queue } from '../Classes/Queue';
 import { LinkState } from '../States/LinkState';
 import { NormalState } from '../States/NormalState';
+import { State } from '../States/State';
 import { UnlinkState } from '../States/UnlinkState';
-import { State } from '../States/state';
 
 @Component({
   selector: 'app-canvas',

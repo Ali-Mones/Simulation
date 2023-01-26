@@ -1,6 +1,6 @@
 import { Part } from "../Classes/Part";
 import { NormalState } from "./NormalState";
-import { State } from "./state";
+import { State } from "./State";
 
 export class UnlinkState extends State {
 

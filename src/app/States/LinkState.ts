@@ -2,7 +2,7 @@ import { Machine } from "../Classes/Machine";
 import { Part } from "../Classes/Part";
 import { Queue } from "../Classes/Queue";
 import { NormalState } from "./NormalState";
-import { State } from "./state";
+import { State } from "./State";
 
 export class LinkState extends State {
 
