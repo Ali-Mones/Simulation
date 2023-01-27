@@ -24,7 +24,7 @@ export class LinkState extends State {
                     this.to.addPrev(this.from);
                     this.canvas.update();
                     this.canvas.state = new NormalState(this.canvas);
-}
+                }
             }
         });
     }

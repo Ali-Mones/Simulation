@@ -9,6 +9,7 @@ import { LinkState } from '../States/LinkState';
 import { NormalState } from '../States/NormalState';
 import { State } from '../States/State';
 import { UnlinkState } from '../States/UnlinkState';
+import { RemoveState } from '../States/RemoveState';
 
 @Component({
   selector: 'app-canvas',
@@ -130,6 +131,10 @@ export class CanvasComponent implements OnInit {
     let m: Machine = new Machine(520, 520, this.mID++);
     this.parts.push(m);
     this.update();
+  }
+
+  removePart() {
+    this.state = new RemoveState(this);
   }
 
   addLink() {
