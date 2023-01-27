@@ -21,9 +21,23 @@ export abstract class Part {
     }
 
     public unlink(second: Part): void {
+        if (this.prev.includes(second)) {
+            this.prev.splice(this.prev.indexOf(second), 1);
+        }
         if (this.next.includes(second)) {
             this.next.splice(this.next.indexOf(second), 1);
         }
+    }
+
+    public unlinkAll() {
+        this.prev.forEach((prev) => {
+            prev.unlink(this);
+        });
+        this.next.forEach((next) => {
+            next.unlink(this);
+        });
+        this.prev = [];
+        this.next = [];
     }
 
     protected renderArrow(ctx: CanvasRenderingContext2D) {

@@ -12,6 +12,8 @@ export class TopMenuComponent {
   @Output()
   addMEvent: EventEmitter<void> = new EventEmitter();
   @Output()
+  removeEvent: EventEmitter<void> = new EventEmitter();
+  @Output()
   addLinkEvent: EventEmitter<void> = new EventEmitter();
   @Output()
   unlinkEvent: EventEmitter<void> = new EventEmitter();
