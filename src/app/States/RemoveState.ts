@@ -1,5 +1,3 @@
-import { CanvasComponent } from "../canvas/canvas.component";
-import { Part } from "../Classes/part";
 import { NormalState } from "./NormalState";
 import { State } from "./State";
 
@@ -9,7 +7,7 @@ export class RemoveState extends State {
         this.canvas.parts.forEach((part) => {
             if (part.isMouseInside(e.x, e.y - 52)) {
                 part.unlinkAll();
-                this.canvas.parts.splice(this.canvas.parts.indexOf(part, 1));
+                this.canvas.parts.splice(this.canvas.parts.indexOf(part), 1);
                 this.canvas.update();
                 this.canvas.state = new NormalState(this.canvas);
             }
